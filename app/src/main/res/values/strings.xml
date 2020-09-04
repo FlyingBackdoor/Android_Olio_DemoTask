@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DemoTask</string>
+    <string name="loading_text">Loading Data... Make sure you are connected</string>
+    <string name="text">Lorem Ipsem</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="wnat_to">Want to put your business?</string>
+    <string name="describe">Unblock access to limitless opportunities \nBe part of Olio, Be part of happiness</string>
+    <string name="contact">Contect Us</string>
+    <string name="icon">icon</string>
+</resources>
