@@ -132,10 +132,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
                     val name = iObject.getString("name")
                     val image = iObject.getString("image")
 
-
                     itemList.add(Categories(name, baseURL+image))
-
-                    println("Name: " + image)
                 }
 
                 adapter = CategoriesAdapter(applicationContext, itemList)

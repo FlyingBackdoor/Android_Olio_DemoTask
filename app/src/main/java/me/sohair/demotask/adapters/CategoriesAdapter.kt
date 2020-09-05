@@ -33,6 +33,10 @@ class CategoriesAdapter(var context: Context, var arrayList: ArrayList<Categorie
             .fit()
             .into(holder.icons)
 
+        holder.icons.setOnClickListener {
+            Toast.makeText(context,"Clicked on ${categories.catName}", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     override fun getItemCount(): Int {
