@@ -13,14 +13,12 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
         
-        <com.android.volley.toolbox.NetworkImageView
+        <ImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:id="@+id/categoryIcons_ImageView"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="5dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
             android:src="@drawable/caterer"/>
 
         <TextView

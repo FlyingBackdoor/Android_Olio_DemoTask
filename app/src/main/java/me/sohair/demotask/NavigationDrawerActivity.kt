@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.GridLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -20,7 +17,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import me.sohair.demotask.adapters.CategoriesAdapter
 import me.sohair.demotask.model.Categories
-import me.sohair.demotask.util.ApiRequest
 import me.sohair.demotask.util.MySingleton
 
 class NavigationDrawerActivity : AppCompatActivity() {
@@ -30,14 +26,12 @@ class NavigationDrawerActivity : AppCompatActivity() {
     //for recyclerView
     private lateinit var recyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
-    private lateinit var items: ArrayList<Categories>
+    private lateinit var itemList: ArrayList<Categories>
     private lateinit var adapter: CategoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation_drawer)
-
-        loadCategories()
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -58,15 +52,14 @@ class NavigationDrawerActivity : AppCompatActivity() {
         }
 
         recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.setHasFixedSize(true)
+
         gridLayoutManager = GridLayoutManager(applicationContext, 3,
             RecyclerView.VERTICAL, false)
 
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
 
-        items = ArrayList()
-
-        adapter = CategoriesAdapter(applicationContext, items)
+        itemList = ArrayList()
 
     }
 
@@ -75,7 +68,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
 
         requestSliders()
 
-        //loadCategories()
+        loadCategories()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -107,7 +100,7 @@ class NavigationDrawerActivity : AppCompatActivity() {
                 val imageSlider = findViewById<ImageSlider>(R.id.image_slider)
                 imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
 
-                progressBar3.visibility = View.INVISIBLE
+                //progressBar3.visibility = View.INVISIBLE
 
                 //Log.d("JSON", response.getJSONArray("data").toString())
             },
@@ -138,10 +131,16 @@ class NavigationDrawerActivity : AppCompatActivity() {
                     val iObject = categories.getJSONObject(i)
                     val name = iObject.getString("name")
                     val image = iObject.getString("image")
-                    items.add(Categories(name, baseURL+image))
-                    adapter.notifyDataSetChanged()
+
+
+                    itemList.add(Categories(name, baseURL+image))
+
                     println("Name: " + image)
                 }
+
+                adapter = CategoriesAdapter(applicationContext, itemList)
+                recyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
                 //Log.d("JSON", response.getJSONArray("data").toString())
             },
             { error ->
